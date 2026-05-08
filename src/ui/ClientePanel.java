@@ -145,14 +145,40 @@ public class ClientePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        String nombre = txtNombre.getText();
-        String telefono = txtTelefono.getText();
+        try {
 
-        Cliente c = new Cliente(id, nombre, telefono);
-        clienteService.agregarCliente(c);
+    int id = Integer.parseInt(txtId.getText());
 
-        cargarTabla();
+    String nombre = txtNombre.getText();
+    String telefono = txtTelefono.getText();
+
+    if (nombre.isEmpty() || telefono.isEmpty()) {
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Complete todos los campos"
+        );
+
+        return;
+    }
+
+    Cliente c = new Cliente(id, nombre, telefono);
+
+    clienteService.agregarCliente(c);
+
+    cargarTabla();
+
+    txtId.setText("");
+    txtNombre.setText("");
+    txtTelefono.setText("");
+
+} catch (NumberFormatException e) {
+
+    javax.swing.JOptionPane.showMessageDialog(
+        this,
+        "El ID debe ser numérico"
+    );
+}
         
         
 

@@ -161,17 +161,69 @@ public class ProductoPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String codigo = txtCodigo.getText();
-        String nombre = txtNombre.getText();
-        String talla = txtTalla.getText();
-        String color = txtColor.getText();
-        double precio = Double.parseDouble(txtPrecio.getText());
-        int stock = Integer.parseInt(txtStock.getText());
+       try {
 
-        Producto p = new Producto(codigo, nombre, talla, color, precio, stock);
-        productoService.guardarProducto(p);
+    String codigo = txtCodigo.getText();
+    String nombre = txtNombre.getText();
+    String talla = txtTalla.getText();
+    String color = txtColor.getText();
 
-        cargarTabla();
+    double precio = Double.parseDouble(txtPrecio.getText());
+    int stock = Integer.parseInt(txtStock.getText());
+
+    if (
+        codigo.isEmpty() ||
+        nombre.isEmpty() ||
+        talla.isEmpty() ||
+        color.isEmpty()
+    ) {
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Complete todos los campos"
+        );
+
+        return;
+    }
+
+    if (precio < 0 || stock < 0) {
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Precio y stock deben ser positivos"
+        );
+
+        return;
+    }
+
+    Producto p = new Producto(
+        codigo,
+        nombre,
+        talla,
+        color,
+        precio,
+        stock
+    );
+
+    productoService.guardarProducto(p);
+
+    cargarTabla();
+
+    txtCodigo.setText("");
+    txtNombre.setText("");
+    txtTalla.setText("");
+    txtColor.setText("");
+    txtPrecio.setText("");
+    txtStock.setText("");
+
+} catch (NumberFormatException e) {
+
+    javax.swing.JOptionPane.showMessageDialog(
+        this,
+        "Precio y stock deben ser numéricos"
+    );
+}
+    
      
     }//GEN-LAST:event_btnAgregarActionPerformed
 

@@ -7,20 +7,36 @@ package service;
 import model.Producto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  * @author john2
  */
-public class ProductoService {
+public class ProductoService implements IProductoService {
     private List<Producto> listaProductos;
+    private final String ARCHIVO = "productos.json";
 
     public ProductoService() {
+         Producto[] datos =
+        JsonUtil.cargar(ARCHIVO, Producto[].class);
+
+    if (datos != null) {
+
+        listaProductos = new ArrayList<>(
+            java.util.Arrays.asList(datos)
+        );
+
+    } else {
+
         listaProductos = new ArrayList<>();
+    }
     }
     
     public void guardarProducto(Producto nuevoProducto) {
         listaProductos.add(nuevoProducto);
+        JsonUtil.guardar(ARCHIVO, listaProductos);
     }
     
     public List<Producto> getListaProductos() {
@@ -38,6 +54,7 @@ public class ProductoService {
     
     public void eliminarProducto(String codigo) {
         listaProductos.removeIf(p -> p.getCodigo().equals(codigo));
+        JsonUtil.guardar(ARCHIVO, listaProductos);
     }
     
     public void actualizarProducto(String codigo, String nombre, String talla, String color, double precio, int stock) {
@@ -51,6 +68,8 @@ public class ProductoService {
         productoEncontrado.setPrecio(precio);
         productoEncontrado.setStock(stock);
     }
+    JsonUtil.guardar(ARCHIVO, listaProductos);
     }
+    
 }
 

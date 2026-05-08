@@ -14,7 +14,7 @@ import model.Producto;
  *
  * @author john2
  */
-public class VentaService {
+public class VentaService implements IVentaService {
     
     private List<Venta> listaVentas;
 

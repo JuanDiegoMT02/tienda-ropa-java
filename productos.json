@@ -1,0 +1,10 @@
+[
+  {
+    "codigo": "123456",
+    "nombre": "camisa",
+    "talla": "L",
+    "color": "Negro",
+    "precio": 35000.0,
+    "stock": 43
+  }
+]
